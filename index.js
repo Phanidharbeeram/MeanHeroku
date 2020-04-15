@@ -7,7 +7,8 @@ const mongoose = require("mongoose");
 const api = require("./Routes/api");
 const app = express();
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8080
+;
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -25,7 +26,7 @@ mongoose.set("useFindAndModify", false);
 // app.get("/", (req, res) => {
 //   res.send("hello");
 // });
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
 app.listen(port, (req, res) => {
