@@ -1,0 +1,106 @@
+<div id="main">
+  <div *ngIf="!toogleForm">
+    <h1>Add-Item</h1>
+    <form #frm="ngForm" (ngSubmit)="addItem(frm)">
+      <div class="form-group">
+        <label for="ItemName">Item Name:</label>
+        <input
+          type="text"
+          class="form-control"
+          name="itemName"
+          ngModel
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="itemQuantity">itemQuantity</label>
+        <input
+          type="number"
+          class="form-control"
+          name="itemQuantity"
+          ngModel
+          required
+        />
+        <small>In Kgs</small>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  <div *ngIf="toogleForm">
+    <h1>Edit-Item</h1>
+    <form #editfrm="ngForm" (ngSubmit)="UpdateItem(editfrm)">
+      <div class="form-group">
+        <label for="ItemName">Item Name:</label>
+        <input
+          type="text"
+          class="form-control"
+          name="itemName"
+          [ngModel]="selectedItem.itemName"
+        />
+      </div>
+      <div class="form-group">
+        <label for="itemQuantity">itemQuantity</label>
+        <input
+          type="number"
+          class="form-control"
+          name="itemQuantity"
+          [ngModel]="selectedItem.itemQuantity"
+        /><small>In Kgs</small>
+      </div>
+      <!-- <input
+        type="checkbox"
+        name="itemBrought"
+        [ngModel]="selectedItem.itemBrought"
+        value="true"
+      /> -->
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+  </div>
+  <br />
+  <hr />
+  <div id="list">
+    <div class="card">
+      <div class="card-body">
+        <ul>
+          <li>Taken</li>
+          <li>Item Name</li>
+          <li>ItemQuantity in Kgs</li>
+        </ul>
+      </div>
+    </div>
+    <div *ngFor="let item of updatesFromMongo">
+      <div class="card">
+        <div class="card-body">
+          <ul>
+            <li>
+              <input
+                type="checkbox"
+                name=""
+                id="checkbox"
+                [checked]="item.itemBrought"
+                (click)="UpdateItemCheckBox(item)"
+              />
+            </li>
+
+            <li>{{ item.itemName }}</li>
+            <li>{{ item.itemQuantity }}</li>
+            <li>
+              <button
+                class="btn btn-primary"
+                (click)="edit(item)"
+                [disabled]="toogleForm || item.itemBrought"
+              >
+                Edit<i class="far fa-edit"></i>
+              </button>
+            </li>
+            <li>
+              <button class="btn btn-danger" (click)="delete(item._id)">
+                Delete<i class="far fa-trash-alt"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
