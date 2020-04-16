@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Item = require("../Models/ShoppingList");
-router.get("/", (req, res) => {
+router.get("/",(req, res) => {
   Item.find((err, item) => {
     if (err) {
       console.log(err);
